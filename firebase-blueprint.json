@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the Mine Host platform.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique ID of the user." },
+        "email": { "type": "string", "format": "email", "description": "The email address of the user." },
+        "displayName": { "type": "string", "description": "The display name of the user." },
+        "role": { "type": "string", "enum": ["admin", "user"], "description": "The role of the user." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the user account was created." }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Server": {
+      "title": "Server",
+      "description": "A Minecraft server instance.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique ID of the server." },
+        "ownerUid": { "type": "string", "description": "The UID of the user who owns the server." },
+        "name": { "type": "string", "description": "The name of the server." },
+        "plan": { "type": "string", "description": "The hosting plan selected for the server." },
+        "status": { "type": "string", "enum": ["running", "stopped", "provisioning"], "description": "The current status of the server." },
+        "ip": { "type": "string", "description": "The IP address of the server." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the server was created." }
+      },
+      "required": ["id", "ownerUid", "name", "plan", "status", "createdAt"]
+    },
+    "Plan": {
+      "title": "Plan",
+      "description": "A hosting plan offered by Mine Host.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique ID of the plan." },
+        "name": { "type": "string", "description": "The name of the plan." },
+        "ram": { "type": "string", "description": "The amount of RAM allocated to the plan." },
+        "cpu": { "type": "string", "description": "The number of CPU cores allocated to the plan." },
+        "price": { "type": "number", "description": "The monthly price of the plan." }
+      },
+      "required": ["id", "name", "ram", "cpu", "price"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "/servers/{serverId}": {
+      "schema": "Server",
+      "description": "Minecraft server instances."
+    },
+    "/plans/{planId}": {
+      "schema": "Plan",
+      "description": "Available hosting plans."
+    }
+  }
+}

@@ -1,0 +1,128 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: {uid}
+    // Fields:
+    //   - uid: string (required, immutable) - The unique ID of the user.
+    //   - email: string (required, email format) - The email address of the user.
+    //   - displayName: string (optional) - The display name of the user.
+    //   - role: string (required, enum: ['admin', 'user']) - The role of the user.
+    //   - createdAt: timestamp (required, immutable) - When the user account was created.
+    //
+    // Collection: servers
+    // Document ID: {serverId}
+    // Fields:
+    //   - id: string (required, immutable) - The unique ID of the server.
+    //   - ownerUid: string (required, immutable) - The UID of the user who owns the server.
+    //   - name: string (required, max length 50) - The name of the server.
+    //   - plan: string (required) - The hosting plan selected for the server.
+    //   - status: string (required, enum: ['running', 'stopped', 'provisioning']) - The current status of the server.
+    //   - ip: string (optional) - The IP address of the server.
+    //   - createdAt: timestamp (required, immutable) - When the server was created.
+    //
+    // Collection: plans
+    // Document ID: {planId}
+    // Fields:
+    //   - id: string (required, immutable) - The unique ID of the plan.
+    //   - name: string (required) - The name of the plan.
+    //   - ram: string (required) - The amount of RAM allocated to the plan.
+    //   - cpu: string (required) - The number of CPU cores allocated to the plan.
+    //   - price: number (required, positive) - The monthly price of the plan.
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "avinash08180@gmail.com" && request.auth.token.email_verified == true)); // Default admin
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function areImmutableFieldsUnchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['uid', 'email', 'displayName', 'role', 'createdAt']) &&
+             data.uid is string && data.uid.size() > 0 &&
+             data.email is string && isValidEmail(data.email) &&
+             data.role in ['admin', 'user'] &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidServer(data) {
+      return hasOnlyAllowedFields(['id', 'ownerUid', 'name', 'plan', 'status', 'ip', 'createdAt']) &&
+             data.id is string && data.id.size() > 0 &&
+             data.ownerUid is string && data.ownerUid.size() > 0 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 50 &&
+             data.plan is string &&
+             data.status in ['running', 'stopped', 'provisioning'] &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidPlan(data) {
+      return hasOnlyAllowedFields(['id', 'name', 'ram', 'cpu', 'price']) &&
+             data.id is string && data.id.size() > 0 &&
+             data.name is string && data.name.size() > 0 &&
+             data.ram is string &&
+             data.cpu is string &&
+             data.price is number && data.price >= 0;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated() && isValidUser(request.resource.data) && 
+                      ((isOwner(userId) && request.resource.data.role == 'user') || isAdmin());
+      allow update: if isAuthenticated() && isValidUser(request.resource.data) && 
+                      areImmutableFieldsUnchanged(['uid', 'createdAt']) &&
+                      ((isOwner(userId) && request.resource.data.role == resource.data.role) || isAdmin());
+    }
+
+    match /servers/{serverId} {
+      allow read: if isAuthenticated() && (resource.data.ownerUid == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && isValidServer(request.resource.data) && 
+                      (request.resource.data.ownerUid == request.auth.uid || isAdmin());
+      allow update: if isAuthenticated() && isValidServer(request.resource.data) && 
+                      areImmutableFieldsUnchanged(['id', 'ownerUid', 'createdAt']) &&
+                      (resource.data.ownerUid == request.auth.uid || isAdmin());
+      allow delete: if isAuthenticated() && (resource.data.ownerUid == request.auth.uid || isAdmin());
+    }
+
+    match /plans/{planId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
