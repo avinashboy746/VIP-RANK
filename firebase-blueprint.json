@@ -40,6 +40,24 @@
         "price": { "type": "number", "description": "The monthly price of the plan." }
       },
       "required": ["id", "name", "ram", "cpu", "price"]
+    },
+    "Website": {
+      "title": "Website",
+      "description": "A custom user-defined website deployed on a subdomain.",
+      "type": "object",
+      "properties": {
+        "ownerUid": { "type": "string", "description": "The user owning this website." },
+        "name": { "type": "string", "description": "Title or Heading of the webpage." },
+        "subdomain": { "type": "string", "description": "Custom subdomain registration." },
+        "domain": { "type": "string", "description": "Target hosting suffix." },
+        "template": { "type": "string", "enum": ["minecraft", "clan", "portfolio"], "description": "Selected layout template." },
+        "accentColor": { "type": "string", "description": "The styling brand color." },
+        "description": { "type": "string", "description": "Catchphrase of the webpage." },
+        "serverIp": { "type": "string", "description": "Linked Minecraft server IP address info." },
+        "discordLink": { "type": "string", "description": "Linked community discord URL." },
+        "aboutText": { "type": "string", "description": "Custom detailed description text." }
+      },
+      "required": ["ownerUid", "name", "subdomain", "domain", "template"]
     }
   },
   "firestore": {
@@ -54,6 +72,10 @@
     "/plans/{planId}": {
       "schema": "Plan",
       "description": "Available hosting plans."
+    },
+    "/websites/{websiteId}": {
+      "schema": "Website",
+      "description": "Custom user-defined portfolio/server websites."
     }
   }
 }

@@ -67,17 +67,65 @@ function AppContent() {
         </AnimatePresence>
       </main>
 
-      <footer className="border-t border-white/10 py-12 bg-black/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
-              <span className="font-bold text-black">M</span>
+      <footer className="border-t border-white/10 pt-20 pb-12 bg-black/80 backdrop-blur-sm relative z-10">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-left">
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
+                  <span className="font-bold text-black">M</span>
+                </div>
+                <span className="text-xl font-bold tracking-tight text-white font-sans">MINE HOST</span>
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                Mine Host - Where Your Minecraft Server Comes Alive Instantly. High-performance game servers powered by latest NVMe SSDs.
+              </p>
+              <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-4 text-center">
+                <p className="text-green-400 font-bold text-sm">Want a Powerful Host? <br/>You Found It.</p>
+              </div>
             </div>
-            <span className="text-xl font-bold tracking-tight">MINE HOST</span>
+
+            <div>
+              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Hosting</h4>
+              <ul className="space-y-4 text-sm text-gray-400">
+                <li><a href="#plans" onClick={() => setView('home')} className="hover:text-green-400 transition-colors">Minecraft Plans</a></li>
+                <li><a href="#plans" onClick={() => setView('home')} className="hover:text-green-400 transition-colors">VPS Hosting</a></li>
+                <li><a href="#plans" onClick={() => setView('home')} className="hover:text-green-400 transition-colors">Web Hosting</a></li>
+                <li><a href="#plans" onClick={() => setView('home')} className="hover:text-green-400 transition-colors">Server Status</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Infrastructure</h4>
+              <ul className="space-y-4 text-sm text-gray-400">
+                <li><a href="#" className="hover:text-green-400 transition-colors">DDoS Protection</a></li>
+                <li><a href="#" className="hover:text-green-400 transition-colors">Global Network</a></li>
+                <li><a href="#" className="hover:text-green-400 transition-colors">NVMe Enterprise SSD</a></li>
+                <li><span className="text-green-500 font-bold hover:underline cursor-pointer">Trustpilot Reviews</span></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Support</h4>
+              <ul className="space-y-4 text-sm text-gray-400">
+                <li><span className="hover:text-green-400 transition-colors cursor-pointer">FAQ</span></li>
+                <li><span className="hover:text-green-400 transition-colors cursor-pointer">Knowledgebase</span></li>
+                <li><span className="hover:text-green-400 transition-colors cursor-pointer">Contact Us</span></li>
+                <li><span className="hover:text-green-400 transition-colors cursor-pointer">Submit Ticket</span></li>
+              </ul>
+            </div>
           </div>
-          <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Mine Host. All rights reserved. Not an official Minecraft product.
-          </p>
+
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-gray-500 text-xs text-center md:text-left">
+              © {new Date().getFullYear()} Mine Host. All rights reserved. Not an official Minecraft product.
+            </p>
+            <div className="flex items-center gap-6 text-xs text-gray-500">
+              <span className="hover:text-white cursor-pointer hover:underline">Terms of Service</span>
+              <span>|</span>
+              <span className="hover:text-white cursor-pointer hover:underline">Privacy Policy</span>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

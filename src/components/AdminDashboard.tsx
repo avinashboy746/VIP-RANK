@@ -14,6 +14,22 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
+const planPrices: Record<string, number> = {
+  dirt: 49,
+  grass: 99,
+  stone: 179,
+  coal: 249,
+  iron: 349,
+  gold: 549,
+  diamond: 799,
+  emerald: 1099,
+  netherite: 1499,
+  'vps-starter': 1299,
+  'vps-pro': 2499,
+  'web-basic': 249,
+  'web-business': 649,
+};
+
 export function AdminDashboard() {
   const [servers, setServers] = useState<ServerInstance[]>([]);
   const [users, setUsers] = useState<UserProfile[]>([]);
@@ -41,7 +57,7 @@ export function AdminDashboard() {
   const stats = [
     { label: 'Total Users', value: users.length, icon: Users, color: 'blue' },
     { label: 'Active Servers', value: servers.filter(s => s.status === 'running').length, icon: Server, color: 'green' },
-    { label: 'Total Revenue', value: `$${servers.reduce((acc, s) => acc + (s.plan === 'grass' ? 4.99 : s.plan === 'iron' ? 9.99 : 19.99), 0).toFixed(2)}`, icon: Activity, color: 'purple' },
+    { label: 'Total Revenue', value: `₹${servers.reduce((acc, s) => acc + (planPrices[s.plan] || 0), 0).toLocaleString()}`, icon: Activity, color: 'purple' },
     { label: 'System Load', value: '12%', icon: Database, color: 'orange' },
   ];
 

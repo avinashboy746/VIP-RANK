@@ -13,46 +13,105 @@ const categories: { id: Category; label: string; icon: any }[] = [
 
 const minecraftPlans = [
   {
-    id: 'invite',
-    name: 'Invite Plan',
-    price: 0,
-    ram: '1GB',
-    cpu: '1 Core',
-    slots: '10',
-    features: ['Free Forever', 'Community Support', 'Standard SSD', 'Public IP'],
-    color: 'gray',
-    tag: 'Free'
+    id: 'dirt',
+    name: 'Dirt',
+    price: 49,
+    ram: '1.0 GB',
+    cpu: '100%',
+    storage: '5 GB',
+    backups: '2 Backups',
+    features: ['100% CPU', '1.0 GB RAM', '5 GB Storage', '1 Port Allocation', '2 Backups', '24/7 Support'],
+    color: 'orange'
   },
   {
     id: 'grass',
-    name: 'Grass Plan',
-    price: 4.99,
-    ram: '2GB',
-    cpu: '1 Core',
-    slots: '20',
-    features: ['Instant Setup', 'NVMe SSD Storage', 'DDoS Protection', '99.9% Uptime'],
+    name: 'Grass',
+    price: 99,
+    ram: '2.0 GB',
+    cpu: '150%',
+    storage: '10 GB',
+    backups: '3 Backups',
+    features: ['150% CPU', '2.0 GB RAM', '10 GB Storage', '1 Port Allocation', '3 Backups', '24/7 Support'],
     color: 'green'
   },
   {
+    id: 'stone',
+    name: 'Stone',
+    price: 179,
+    ram: '4.0 GB',
+    cpu: '200%',
+    storage: '20 GB',
+    backups: '4 Backups',
+    features: ['200% CPU', '4.0 GB RAM', '20 GB Storage', '1 Port Allocation', '4 Backups', '24/7 Support'],
+    color: 'gray',
+    popular: true
+  },
+  {
+    id: 'coal',
+    name: 'Coal',
+    price: 249,
+    ram: '6.0 GB',
+    cpu: '250%',
+    storage: '25 GB',
+    backups: '4 Backups',
+    features: ['250% CPU', '6.0 GB RAM', '25 GB Storage', '1 Port Allocation', '4 Backups', '24/7 Support'],
+    color: 'gray'
+  },
+  {
     id: 'iron',
-    name: 'Iron Plan',
-    price: 9.99,
-    ram: '4GB',
-    cpu: '2 Cores',
-    slots: '50',
-    features: ['Instant Setup', 'NVMe SSD Storage', 'DDoS Protection', '99.9% Uptime', 'Daily Backups'],
+    name: 'Iron',
+    price: 349,
+    ram: '8.0 GB',
+    cpu: '300%',
+    storage: '35 GB',
+    backups: '5 Backups',
+    features: ['300% CPU', '8.0 GB RAM', '35 GB Storage', '1 Port Allocation', '5 Backups', '24/7 Support'],
     color: 'blue',
     popular: true
   },
   {
+    id: 'gold',
+    name: 'Gold',
+    price: 549,
+    ram: '12.0 GB',
+    cpu: '400%',
+    storage: '50 GB',
+    backups: '7 Backups',
+    features: ['400% CPU', '12.0 GB RAM', '50 GB Storage', '1 Port Allocation', '7 Backups', '24/7 Support'],
+    color: 'yellow'
+  },
+  {
     id: 'diamond',
-    name: 'Diamond Plan',
-    price: 19.99,
-    ram: '8GB',
-    cpu: '4 Cores',
-    slots: 'Unlimited',
-    features: ['Instant Setup', 'NVMe SSD Storage', 'DDoS Protection', '99.9% Uptime', 'Daily Backups', 'Priority Support'],
+    name: 'Diamond',
+    price: 799,
+    ram: '16.0 GB',
+    cpu: '500%',
+    storage: '70 GB',
+    backups: '10 Backups',
+    features: ['500% CPU', '16.0 GB RAM', '70 GB Storage', '1 MySQL Database', '1 Port Allocation', '10 Backups', '24/7 Support'],
     color: 'cyan'
+  },
+  {
+    id: 'emerald',
+    name: 'Emerald',
+    price: 1099,
+    ram: '24.0 GB',
+    cpu: '600%',
+    storage: '100 GB',
+    backups: '14 Backups',
+    features: ['600% CPU', '24.0 GB RAM', '100 GB Storage', '1 MySQL Database', '2 Port Allocations', '14 Backups', '24/7 Support'],
+    color: 'emerald'
+  },
+  {
+    id: 'netherite',
+    name: 'Netherite',
+    price: 1499,
+    ram: '32.0 GB',
+    cpu: '700%',
+    storage: '140 GB',
+    backups: '20 Backups',
+    features: ['700% CPU', '32.0 GB RAM', '140 GB Storage', '1 MySQL Database', '3 Port Allocations', '20 Backups', '24/7 Support'],
+    color: 'purple'
   }
 ];
 
@@ -60,7 +119,7 @@ const vpsPlans = [
   {
     id: 'vps-starter',
     name: 'VPS Starter',
-    price: 14.99,
+    price: 1299,
     ram: '4GB',
     cpu: '2 vCPU',
     storage: '80GB NVMe',
@@ -70,7 +129,7 @@ const vpsPlans = [
   {
     id: 'vps-pro',
     name: 'VPS Pro',
-    price: 29.99,
+    price: 2499,
     ram: '8GB',
     cpu: '4 vCPU',
     storage: '160GB NVMe',
@@ -84,7 +143,7 @@ const webPlans = [
   {
     id: 'web-basic',
     name: 'Web Basic',
-    price: 2.99,
+    price: 249,
     storage: '10GB SSD',
     bandwidth: 'Unlimited',
     features: ['1 Website', 'Free SSL', 'cPanel Access', 'Daily Backups'],
@@ -93,7 +152,7 @@ const webPlans = [
   {
     id: 'web-business',
     name: 'Web Business',
-    price: 7.99,
+    price: 649,
     storage: 'Unlimited SSD',
     bandwidth: 'Unlimited',
     features: ['Unlimited Websites', 'Free SSL', 'cPanel Access', 'Daily Backups', 'Free Domain (1yr)'],
@@ -240,7 +299,7 @@ export function Pricing() {
                     </div>
                     {domainStatus === 'available' && (
                       <button className="bg-green-500 hover:bg-green-600 text-black px-6 py-2 rounded-lg font-bold transition-all">
-                        Buy Now - $12.99/yr
+                        Buy Now - ₹1,099/yr
                       </button>
                     )}
                   </motion.div>
@@ -249,15 +308,15 @@ export function Pricing() {
                 <div className="mt-12 grid grid-cols-3 gap-4">
                   <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
                     <span className="text-green-500 font-bold block text-lg">.com</span>
-                    <span className="text-gray-500 text-xs">$12.99/yr</span>
+                    <span className="text-gray-500 text-xs">₹1,099/yr</span>
                   </div>
                   <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
                     <span className="text-blue-500 font-bold block text-lg">.net</span>
-                    <span className="text-gray-500 text-xs">$10.99/yr</span>
+                    <span className="text-gray-500 text-xs font-medium">₹949/yr</span>
                   </div>
                   <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
                     <span className="text-purple-500 font-bold block text-lg">.org</span>
-                    <span className="text-gray-500 text-xs">$11.99/yr</span>
+                    <span className="text-gray-500 text-xs">₹999/yr</span>
                   </div>
                 </div>
               </div>
@@ -297,7 +356,7 @@ const PlanCard: React.FC<{ plan: any; index: number }> = ({ plan, index }) => {
       <div className="mb-8">
         <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-bold text-white">${plan.price}</span>
+          <span className="text-4xl font-bold text-white">₹{plan.price}</span>
           <span className="text-gray-500 text-sm">{plan.price === 0 ? '' : '/month'}</span>
         </div>
       </div>
@@ -329,6 +388,13 @@ const PlanCard: React.FC<{ plan: any; index: number }> = ({ plan, index }) => {
             <Globe className="w-4 h-4 text-orange-500" />
             <span className="text-xs font-bold text-white">{plan.bandwidth}</span>
             <span className="text-[10px] text-gray-500 uppercase tracking-widest">Bandwidth</span>
+          </div>
+        )}
+        {plan.backups && (
+          <div className="p-3 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-1">
+            <Shield className="w-4 h-4 text-green-400" />
+            <span className="text-xs font-bold text-white">{plan.backups}</span>
+            <span className="text-[10px] text-gray-500 uppercase tracking-widest">Backups</span>
           </div>
         )}
       </div>

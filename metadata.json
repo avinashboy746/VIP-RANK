@@ -1,5 +1,6 @@
 {
   "name": "Mine Host",
-  "description": "Premium Minecraft Server Hosting with high performance and instant setup.",
-  "requestFramePermissions": []
+  "description": "Where Your Minecraft Server Comes Alive Instantly. High-performance game hosting in India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
